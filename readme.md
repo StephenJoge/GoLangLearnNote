@@ -54,6 +54,7 @@ Golang 的主要关注点是使得高可用性和可扩展性的 Web 应用的�
     |vendor|make vendored copy of dependencies(将依赖复制到vendor下)|
     |verify|verify dependencies have expected content (验证依赖是否正确)|
     |why|explain why packages or modules are needed(解释为什么需要依赖)|
+    
     __go.mod文件一旦创建后，它的内容将会被go toolchain全面掌控。go toolchain会在各类命令执行时，比如go get、go build、go mod等修改和维护go.mod文件__
 + ### 获取插件及工具包
     目前GoLang开发依赖第三方工具包及插件库，插件获取需要使用git远程仓库，国内请求git需要修改host文件。
