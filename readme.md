@@ -33,6 +33,28 @@ Golang 的主要关注点是使得高可用性和可扩展性的 Web 应用的�
     若出现 <font color='blue'>编译器报错 no required module provides package XXXXX</font>的问题，可使用如下操作：
     >       进入XXXXX第三方包根路径下，执行 go mod init 命令，初始化包后，重试。
     **eg:** 在 gopath 查找包，按照 __GOROOT__ 和 __GPPATH__ 目录下 src/xxx 依次查找。在 gomod 下查找包，解析 go.mod 文件查找包，mod 包名就是包的前缀，里面的目录就后续路径了。在 gomod 模式下，查找包就不会去 gopath 查找，只是 gomod 包缓存在 **{GOPATH}**/pkg/mod 里面。
+
+    #### 如何使用 Modules 
+    __GO111MODULE__ 有三个值：off, on（默认值）和auto。
+    + __off__，go命令行将不会支持module功能，寻找依赖包的方式将会沿用旧版本那种通过vendor目录或者GOPATH模式来查找。
+    + __on__，go命令行会使用modules，不会去GOPATH目录下查找。
+    + __auto__，go命令行将会根据当前目录来决定是否启用module功能。这种情况下可以分为两种情形：
+        + 当前目录在GOPATH/src之外且该目录包含go.mod文件 
+        + 当前文件在包含go.mod文件的目录下面
+    
+    __eg:__ auto,看当前目录或者上级目录是否存在go.mod,go.sum，如果存在，则启用go mod
+    #### mod 命令
+    |    命令    |   说明    |
+    |   :-----:   |  :-----:   |
+    |download|download modules to local cache(下载依赖包)|
+    |edit|edit go.mod from tools or scripts(编辑go.mod)|
+    |graph|print module requirement graph (打印模块依赖图)|
+    |init|initialize new module in current directory(在当前目录初始化mod,生成go.mod文件)|
+    |tidy|add missing and remove unused modules(拉取缺少的模块，移除不用的模块)|
+    |vendor|make vendored copy of dependencies(将依赖复制到vendor下)|
+    |verify|verify dependencies have expected content (验证依赖是否正确)|
+    |why|explain why packages or modules are needed(解释为什么需要依赖)|
+    __go.mod文件一旦创建后，它的内容将会被go toolchain全面掌控。go toolchain会在各类命令执行时，比如go get、go build、go mod等修改和维护go.mod文件__
 + ### 获取插件及工具包
     目前GoLang开发依赖第三方工具包及插件库，插件获取需要使用git远程仓库，国内请求git需要修改host文件。
     #### Win平台git配置步骤如下
